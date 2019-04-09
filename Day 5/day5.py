@@ -29,7 +29,7 @@ def react(p):
 	return "".join(p_stack)
 
 test = "abcDEFabc"
-test = re.sub('[ac]', '', test)
+test = test.replace("[ac]", "")
 print(test)
 
 reacted = react(polymer)
