@@ -17,11 +17,6 @@ for i in range(len(claims)):
 
 	claims[i] = claim_dict
 
-print(claims[:10])
-
-loc = "%d, %d" % (5, 30)
-print(loc)
-
 claimants = {}
 for c in claims:
 	for col in range(c["col_start"], c["col_end"]):
@@ -31,6 +26,13 @@ for c in claims:
 				claimants[loc] = 1
 			else:
 				claimants[loc] += 1
+
+double_claimed = 0
+for count in claimants.values():
+	if count >= 2:
+		double_claimed += 1
+
+print(double_claimed)
 
 def uncontested(id):
 	for col in range(claims[id]["col_start"], claims[id]["col_end"]):
