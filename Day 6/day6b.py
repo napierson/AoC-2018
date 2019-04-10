@@ -27,4 +27,24 @@ for x in range(xmin, xmax + 1):
 		if total_dist([x, y]) < 10000:
 			safe_ct += 1
 
+region_ct = {None: 0}
+for c in coords:
+	region_ct[str(c)] = 0
+
+for x in range(xmin, xmax + 1):
+	for y in range(ymin, ymax + 1):
+		parent = None
+		least_dist = 100000
+		for c in coords:
+			c_dist = abs(c[0] - x) + abs(c[1] - y)
+			if c_dist < least_dist:
+				least_dist = c_dist
+				parent = str(c)
+			elif c_dist == least_dist:
+				parent = None
+		region_ct[parent] += 1
+
+for k in sorted(region_ct.keys(), key = lambda k: -region_ct[k])[:10]:
+	print("Node %s, count %d\n" % (k, region_ct[k]))
+
 print(safe_ct)
