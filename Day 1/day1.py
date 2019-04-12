@@ -12,7 +12,7 @@ print(freq)
 
 freq = 0
 idx = 0
-freqs_reached = []
+freqs_reached = set()
 while freq not in freqs_reached:
 	freqs_reached.append(freq)
 	freq += freq_deltas[idx]
