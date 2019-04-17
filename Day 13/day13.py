@@ -35,11 +35,11 @@ class Cart:
 		elif cur_track == "+":
 			self.turn(self.next_turn)
 			if self.next_turn == "L":
-				self.next_turn == "S"
+				self.next_turn = "S"
 			elif self.next_turn == "S":
-				self.next_turn == "R"
+				self.next_turn = "R"
 			else:
-				self.next_turn == "L"
+				self.next_turn = "L"
 
 		self.px += Cart.DIRS[self.facing][0]
 		self.py += Cart.DIRS[self.facing][1]
@@ -74,23 +74,27 @@ for y in range(len(tracks_raw)):
 
 tick_ct = 0
 def tick():
-	global tick_ct
+	global tick_ct, carts
 	tick_ct += 1
 	for c in sorted(carts, key = lambda c:(c.py, c.px)):
 		#print("Cart at: (%d, %d)" % (c.px, c.py))
-		cart_pos.remove((c.px, c.py))
-		new_pos = c.advance()
-		#print("Moved to: (%d, %d)\n" % new_pos)
-		if new_pos in cart_pos:
-			return new_pos
-		else:
-			cart_pos.add(new_pos)
+		if c in carts:
+			cart_pos.remove((c.px, c.py))
+			new_pos = c.advance()
+			#print("Moved to: (%d, %d)" % new_pos)
+			#print("Next turn: %s\n" % c.next_turn)
+			if new_pos in cart_pos:
+				carts = [c for c in carts if (c.px, c.py) != new_pos]
+				cart_pos.remove(new_pos)
+				print(len(carts), ": ", cart_pos)
+			else:
+				cart_pos.add(new_pos)
 
 	return None
 
-collision = None
-while not collision:
-	collision = tick()
+while len(carts) > 1:
+	tick()
 
-print(collision)
+carts[0].advance()
+print(carts[0].px, carts[0].py)
 print(tick_ct)
