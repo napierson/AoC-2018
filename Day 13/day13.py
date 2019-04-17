@@ -95,6 +95,5 @@ def tick():
 while len(carts) > 1:
 	tick()
 
-carts[0].advance()
 print(carts[0].px, carts[0].py)
 print(tick_ct)
